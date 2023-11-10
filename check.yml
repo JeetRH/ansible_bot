@@ -5,11 +5,11 @@
 
   
 
-#   tasks:
-#       - name: Ensure apache is at the latest version
-#       ansible.builtin.yum:
-#         name: httpd
-#         state: latest
+  tasks:
+      - name: Ensure apache is at the latest version
+      ansible.yum:
+        name: httpd
+        state: whatever
 
 #   - name: Write the apache config file
 #     ansible.builtin.template:
