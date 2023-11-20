@@ -1,0 +1,16 @@
+#How many times did you have to leave your VScode to complete this? 8
+#List all the sources you used to complete this task? 4 Google, 2 Local OneNote, 2 Bash help 
+#How long did it take to complete this task? 20 mins
+---
+- name: Ansible playbook M1
+  hosts: poc_hosts 
+  become: true 
+  tasks:
+  - name: create 2 directories in your users home directory and change ownership
+    shell:
+      $ mkdir ~/POC1 ~/Poc2
+      chmod 0775 Poc1
+      chmod 0775 Poc2
+      adduser user1
+      chown -R $User ~/Poc1
+      chown -R $User ~/Poc2

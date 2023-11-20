@@ -1,0 +1,22 @@
+# How many times did you have to leave your VScode to complete this? 
+# Most of the time. I don't have any clue where to start
+# Hom tong the turee to unplete this eate this manute nsible, google, stack exchange
+# 30 min
+---
+- name: m_3
+  hosts: poc_hosts 
+  become: yes 
+  tasks:
+  - name: latest Apache version installed 
+    yum:
+      name: httpd
+      state: latest
+  - name: Apache enabled and running 
+    service:
+      name: httpd
+      enabled: true 
+      state: started
+  - name: copy index.html
+    сору:
+      src: ~/index.html
+      dest: /var/www./html/

@@ -1,0 +1,20 @@
+---
+- name: Create directories 
+  hosts: poc_hosts 
+  become: yes
+
+- name: Create a directory
+  file:
+    path: "~/POC1"
+    state: directory
+    mode: '0755'
+    owner: user1
+    group: user1
+
+- name: Create a second directory
+  file:
+    path: "~/POC2"
+    state: directory
+    mode: '0755'
+    owner: user1
+    group: user1

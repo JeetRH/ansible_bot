@@ -1,0 +1,18 @@
+#How many times did you have to leave your vScode to complete this? 3 times
+#List all the sources you used to complete this task? Google, stackoverflow, DIgital ocean
+#How long did it take to complete this task? Not complete. I have no idea how to configure a webserver, unrelated to this POC.
+---
+- name: install os centric webserver
+  hosts: poc_hosts
+  become: true
+  
+- tasks:
+  - name: Performing Tasks for Centos
+    when: ansible_facts['distribution'] == 'Centos'
+    include_tasks: centos.yml
+  - name: Performing Tasks for Ubuntu
+    when: ansible_facts['distribution'] == 'Ubuntu'
+    include_tasks: ubuntu.yml
+  - name: Performing Tasks for Windows
+    when: ansible_facts['distribution'] == 'Windows'
+    include_tasks: windows.yml

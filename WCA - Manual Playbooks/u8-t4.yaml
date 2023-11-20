@@ -1,0 +1,50 @@
+---
+- name: collect a specific VM memory 
+  vmware.vmware_rest.vcenter_vm_info:
+    memory_mb: '{{ search_result.value[0].memory_mb }}'
+
+- name: Create a virtual machine from a template 
+  community.vmware.vmware_guest:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}" 
+    password: "{{ vcenter_password }}" 
+    datacenter: vcenter_datacenter 
+    cluster: vcenter_cluster 
+    folder: /vcenter_folder 
+    name: ansible-poc-vm 
+    state: poweredon 
+    template: vcenter_template 
+    tag_names:
+    - poc
+    - ansible 
+    disk:
+    - size_gb: 10
+      type: thin 
+      datastore: vcenter_datastore 
+      hardware:
+      memory_mb: 512
+      num_cpus: 6
+      num_cpu_cores _per_socket: 3 
+      scsi: paravirtual 
+      memory_reservation_lock: true 
+      mem_limit: 8096
+      mem_reservation: 4096 
+      cpu_shares_level: "high"
+      cpu_reservation: 4096
+      max_connections: 5 
+      hotadd_cpu: true 
+      hotremove_cpu: true 
+      hotadd_memory: false
+
+  - name: Create a snapshot of the vm 
+    community.vmware.vmvare_guest_snapshot:
+      hostname: {{ vcenter_hostname }}
+      username: {{ vcenter_username }}
+      password: {{ vcenter_password }} 
+      datacenter: {{ datacenter_name }} 
+      folder: {{ vcenter_folder }} 
+      name: poc-snapshot 
+      state: present 
+      snapshot_name: poc-snapshot 
+      description: poc-snapshot 
+    delegate_to: localhost

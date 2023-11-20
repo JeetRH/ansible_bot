@@ -1,0 +1,12 @@
+---
+- name: m_1
+  hosts: poc_hosts
+  tasks:
+  - name: use a module to verify connectivity to the defined target 
+    ansible.builtin.ping:
+
+# Questions:
+# 1. I left vs code about 3 times
+# 2. Sources:
+# 2.1 https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html
+# 3. It took me about 5 minutes to complete the task

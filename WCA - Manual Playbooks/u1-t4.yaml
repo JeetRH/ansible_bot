@@ -1,0 +1,37 @@
+
+# ansible documentation on multiple pages, stack overflow, testing is required to check functionality and to test of logic is working
+---
+- name: create webserver
+  hosts: poc_hosts
+  gather_facts: yes
+  tasks:
+  - name: check memory amount
+    - debug: var=ansible_memtotal_mb
+      register: memtotal
+
+  - name: Create a virtual machine on given ESXi hostname
+    community.vmware. vmware_guest:
+      name: ansible-poc-vm
+      hostname: "{{} vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      validate_certs: false
+      datacenter: "{{ vcenter_datacenter }}"
+      cluster: "{{ vcenter_cluster }}"
+      template: "{{ vcenter_template }}"
+      folder: "{{ vcenter_folder }}"
+      tag_names: [poc] [ansible]
+      disk:
+      - size_gb: 10
+      hardware:
+        memory_mb: "{{ memtotal }}"
+      state: poweredon
+
+  - name: Create a snapshot
+    community .vmware.vmware_guest_snapshot:
+        folder: "{{ vcenter_folder }}"
+      name: ansible-poc-snapshot
+      state: present
+      snapshot_name: snap1
+      description: snap1_description
+    delegate_to: localhost

@@ -1,0 +1,29 @@
+# several visits to multiple sites, stackoverflow, ansible docs, scalewaydocs
+# not sure how to configure html and would need actual testing to make sure it is working also need to test how to get variable of OS and how to select
+# package according to 05.
+---
+- name: create webserver 
+  hosts: poc_hosts 
+  gather_facts: yes
+
+  tasks:
+  - name: check 05 version
+      debug: var=ansible_os_family
+
+  - name: Install httpd package 
+    dnf:
+      name: httpd
+      state: latest
+
+  - name: Start and enable httpd service 
+    service:
+      name: httpd
+      enabled: true 
+      state: started
+
+  - name: Create a custom index.html file 
+    copy:
+      dest: /var/www/html/index.html
+      content: |
+        Hostname: {{ansible_hostname}}
+        IP Address: {{ansible_host}}

@@ -1,0 +1,13 @@
+# 3 times Ansible documentation and ansible playbook example + stackoverflow
+---
+- name: create directories 
+  hosts: poc_hosts
+
+  tasks:
+  - name: create directories PoC1
+    file:
+      path: "{{ my_home }}"
+      owner: user1
+      group: user1
+      mode: 0775
+      state: directory

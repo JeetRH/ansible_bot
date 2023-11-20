@@ -1,0 +1,3 @@
+---
+- name: installing IIS
+  apt: pkg=IIS state=present

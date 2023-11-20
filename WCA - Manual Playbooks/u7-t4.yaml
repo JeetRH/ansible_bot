@@ -1,0 +1,42 @@
+---
+- name: m_4
+  hosts: poc_hosts 
+  connection: local
+  tasks:
+  - name: Provision a vCenter VM 
+    vmtware_guest:
+      name: ansible-poc-vm
+      hostname: {{ vcenter_hostname }}
+      username: {{ vcenter_username }}
+      password: {{ vcenter_password }} 
+      validate_certs: False
+      datacenter: {{ vcenter_datacenter }}
+      cluster: {{ vcenter_cluster }}
+      template: {{ vcenter_template }} 
+      folder: {{ vcenter_folder }} 
+      disk:
+      - size_gb: 10
+      state: poweredon 
+      tag_names:
+        - poc
+        - ansible
+
+  - name: Create a snapshot of the vm 
+    community.vmware.vmvare_guest_snapshot:
+      hostname: {{ vcenter_hostname }}
+      username: {{ vcenter_username }}
+      password: {{ vcenter_password }} 
+      datacenter: {{ datacenter_name }} 
+      folder: {{ vcenter_folder }} 
+      name: ansible-poc-snapshot 
+      state: present 
+      snapshot_name: snap1
+      description: snap1_description
+
+# Questions:
+# 1. I left vs code about 17 times
+# 2. Sources:
+#2.1 https://docs.ansible.com/archive/ansible/2.6/vmware/scenario_clone_template.htm1
+# 2.2 https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_guest_disk_module.html#examples
+#2.3 https://docs.ansible.com/ansible/latest/collections/community/vmvare/vmware_guest_snapshot_module.html#examples
+# 3. It took me about 25 minutes to complete the task

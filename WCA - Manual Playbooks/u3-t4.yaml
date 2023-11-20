@@ -1,0 +1,56 @@
+---
+#How many times did you have to leave your vScode to complete this? Twice 
+#List all the sources you used to complete this task? Google, Stackoverflowansiblepilot.com
+#How long did it take to complete this task? 17 minutes
+
+- name: ansible poc VM
+  hosts: poc_hosts 
+  become: true
+
+- tasks:
+  - name: create folder 
+    vcenter_folder:
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      validate_certs: "{{ false }}"
+      datacenter_name: "{{ vcenter_datacenter }}"
+      folder_name: "{{ vcenter_destination_folder }}" 
+      folder_type: vm 
+      state: present
+  - name: create VM 
+    vmware_guest:
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      validate_certs: "{{ vcenter _validate_certs }}" 
+      datacenter: "{{ vcenter_datacenter }}"
+      name: "{{ ansible-poc-vm }}"
+      folder: "{{ vcenter_destination_folder }}" 
+      state: "{{ vm_state }}"
+      guest_id: "{{ vm_guestid }}"
+      cluster: "{{ vcenter_cluster }}" 
+      tag: "{{ tag1:poc, tag2:ansible }}"
+      disk:
+        - size_gb: "{{ 10gb }}"
+          type: "{{ vm_disk_type }}"
+          datastore: "{{ vm_disk_datastore }}"
+      hardware:
+        memory_mb: "{{ vm_hw_ram_mb }}"
+        num_cpus: "{{ vm_hw_cpu_mb }}"
+        scsi: "{{ vm_hw_scsi }}"
+      networks:
+      - name: "{{ vm_net_name }}" 
+        device_name: "{{ vm_net_type }}"
+- tasks:
+  - name: Create a snapshot_name:
+    community.vmware. vmware_guest_snapshot:
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      datacenter: "{{ vcenter_datacenter }}"
+      folder: "{{ datacenter_name }} /vm/" 
+      name: "{{ ansible_poc_vm }}"
+      state: present
+      snapshot_name: snap1
+      description: snap1_description
+      delegate_to: localhost

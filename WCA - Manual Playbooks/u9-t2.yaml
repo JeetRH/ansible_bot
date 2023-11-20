@@ -1,0 +1,17 @@
+# List all the soures y luse tocomplete titstasktts://dcs.anstbe.com/ansible/atest/collections/anstble/bt1th/fe.module.tnl
+#https:https://stackoverflow.com/questions/42186301/ansible-create-multiple-folders-if-dont-exist
+# How long did it take to complete this task?-->10minutes
+---
+- name: creating directories 
+  hosts: poc_hosts
+  tasks:
+  - name: create directory at home directory 
+    ansible.builtin.file: 
+      path: "{{ item }}"
+      state: directory 
+      owner: user1
+      group: user1 
+      mode: '0775' 
+      loop:
+        - /home/PoC1
+        - /home/PoC2

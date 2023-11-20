@@ -1,0 +1,10 @@
+#How many times did you have to leave your vScode to complete this? 2
+#List all the sources you used to complete this task? 2 google
+#How long did it take to complete this task? 5 mins
+---
+- name: Ansible playbook M1
+  hosts: poc_hosts
+  become: true
+  tasks:
+    - name: Test hosts connectivity to hosts
+      command: ping

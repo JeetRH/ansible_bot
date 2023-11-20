@@ -1,0 +1,6 @@
+---
+- name: Verify Connectivity 
+  hosts: poc_hosts 
+  tasks:
+    - name: connect to tasrget
+      ping:

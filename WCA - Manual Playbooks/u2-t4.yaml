@@ -1,0 +1,62 @@
+#How many times did you have to leave your VSCode to complete this? 10
+#List all the sources you used to complete this task? 10 google 
+#How long did it take to complete this task? 50
+---
+- name: Ansible playbook M3
+  hosts: poc_hosts 
+  become: true 
+  tasks:
+  - name: ansible-poc-vm 
+    vars_prompt:
+      - name: "vcenter_hostname"
+        prompt: "vcenter hostname is "
+        private: no
+      - name: "vcenter_username"
+        prompt: "vcenter username is"
+        private: no
+      - name: "vcenter_password "
+        prompt: "vcenter password is " 
+        private: yes
+      - name: "vcenter_datacenter"
+        prompt: "Datacenter is"
+        private: no
+      - name: "vcenter_cluster" 
+        prompt: "Cluster is "
+        private: no
+      - name: "vcenter_template"
+        prompt: "template to clone from:"
+        private: no
+      - name: "vcenter_folder"
+        prompt: "Folder to store "
+        private: no 
+      tasks:
+      - vsphere_guest:
+          vcenter_hostname: "{{ vcenter hostname }}"
+          username: "{{ vcenter_username }}"
+          password: "[{ vcenter_password }}"
+          state: powered-on 
+          vm_extra_config:
+            notes: "tag1 -> poc, tag? -> ansible" 
+            validate_certs: false 
+            vm_disk:
+              disk1:
+              size_gb: 10
+          vm_hardware:
+            memory_mo:
+              shell:
+                cat /proc/meminfo | awk '/MemTotal/{print $2}'
+          esxi:
+            datacenter: "{{ datacenter }}"
+            hostname: "ll esxi_host }}"
+  - name: Create a snapshot
+    community.vmware.vmware_guest_snapshot:
+      hostname: "{{ vcenter _hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      datacenter: "{{ datacenter_name }}"
+      folder: "/{{ vcenter_folder }} /vm/"
+      name: "{{ ansible-poc-snapshot }}"
+      state: present
+      snapshot_name: snap1
+      description: snap1_description
+    delegate_to: localhost

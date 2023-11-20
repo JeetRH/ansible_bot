@@ -1,0 +1,51 @@
+# How many times did you have to leave your VSCode to complete this?-->8
+# List all the sources you used to complete this task?--https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_tag_module.html
+# https://docs.ansible.com/archive/ansible/2.6/vmware/scenario_clone_template.html
+# How long did it take to complete this task?--›30minutes
+---
+- name: Create a VM from a template 
+  hosts: poc_hosts
+
+  tasks:
+  - name: Clone the vc from template 
+    vmware_guest:
+      hostname: 192.0.2.44
+      username: administrator@vsphere.local 
+      password: vmware 
+      validate_certs: False 
+      name: ansible-poc-vm 
+      template: vcenter_template 
+      datacenter: DC1
+      folder: /DC1/vm
+      state: poweredon 
+    disk:
+      size_GiB: 10
+
+  - name: Create a tag
+    community.vmware.vmware_tag:
+      hostname: 192.0.2.44
+      username: administrator@vsphere.local
+      password: vmware 
+      tag_name: poc 
+      state: present
+    delegate_to: localhost
+
+  - name: Create a tag
+    community.vmware.vmware_tag:
+      hostname: 192.0.2.44
+      username: administrator@vsphere.local
+      password: vmware 
+      tag_name: ansible 
+      state: present
+    delegate_to: localhost
+
+  - name: Create a snapshot
+    community.vmware.vmware_guest_snapshot:
+      hostname: "192.0.2.44"
+      username: "administrator@vsphere.local"
+      password: "vmware" 
+      datacenter: DC1
+      folder: "/DC1/vm/"
+      name: "ansible-poc-vm"
+      state: present
+      snapshot_name: ansible-poc-snapshot

@@ -1,0 +1,22 @@
+---
+- name: m_2
+  hosts: poc_hosts
+  tasks:
+  - name: Create two directories in home directory 
+    ansible.builtin.file:
+      path: {{home}}
+      state: directory 
+      owner: user1
+      group: user1 
+      mode: '0755'
+    100p:
+    - /РOC1
+    - /POC2
+
+# Questions:
+# 1. I left vs Code about 8 times
+# 2. Sources:
+# 2.1 https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fle_module.html#examples
+# 2.2 https://stackoverflow.com/questions/45795083/how-to-create-folder-in-user-home-using-ansible
+# 2.3 https://stackoverflow.com/questions/42186301/ansible-create-multiple-folders-if-dont-exist
+# 3. It took me about 20 minutes to complete the

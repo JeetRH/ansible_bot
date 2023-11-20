@@ -1,0 +1,11 @@
+# How many times did you have to leave your vscode to complete this?-->4
+# List all the sources you used to complete this task?--https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html
+#https://www.reddit.com/r/ansible/comments/coqhin/how_to_do_something_based_on_ping_results/?rdt=33057
+# How long did it take to complete this task?-->15minutes
+---
+- name: Connectivity test
+  hosts: poc_hosts
+  tasks:
+  - name: Ping test for all hosts 
+    ansible.builtin.ping: 
+    register: ping_results

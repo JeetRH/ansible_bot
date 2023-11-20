@@ -1,0 +1,19 @@
+---
+- name: Create Directories in user Directories 
+  hosts: poc_hosts 
+  become: yes
+
+  tasks:
+  - name: Check the target os 
+    ansible_distribution_facts:
+    register: os_info
+
+  - name: Install web server 
+    package:
+      name: httpd
+      state: started 
+      enabled: yes
+
+  - name: Display Inventory 
+    debug:
+      msg: "Inventory hostname: {{ inventory_hostname }} | IP Address: {{ ansible_host }}"

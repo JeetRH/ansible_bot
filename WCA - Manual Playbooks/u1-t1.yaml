@@ -1,0 +1,8 @@
+# 2 times ansible documentation and ansible playbook example
+- - -
+- name: Connectivity check ping
+  hosts: poc_hosts
+
+  tasks:
+  - name: check Connectivity with pong
+    ansible.builtin.ping:

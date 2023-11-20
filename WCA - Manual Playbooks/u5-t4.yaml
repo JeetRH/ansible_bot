@@ -1,0 +1,26 @@
+# How many times did you have to leave your VSCode to complete this? Most of the time. I don't have any clue where to start
+# How told the trees to upd te cons es the manute sansible, google, stack exchange
+# 30 min
+---
+- name: ansible-poc-v 
+  hosts: poc_hosts 
+  vmware.vmware_rest.vcenter_vm:
+    placement:
+      cluster: "{{ vcenter_cluster }}"
+      folder: "{{ vcenter_folder }}"
+    name: ansible-poc-vm 
+    memory:
+      hot_add_enabled: true 
+      size_MiB: 1024
+    Poweron: true
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    vcenter_validate_certs: false
+    template_library_item: "{{ vcenter_template }} " 
+    disks:
+    - type: SATA 
+      new_vmdk:
+      name: disk1
+      capacity: 10000000
+    register: _result

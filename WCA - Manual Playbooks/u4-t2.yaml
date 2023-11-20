@@ -1,0 +1,27 @@
+# How many times did you have to leave your VSCode to complete this?
+# 5
+# List all the sources you used to complete this task?
+# Stackoverflow and Ansible.com
+# How long did it take to complete this task?
+# 5 min
+---
+- name: ansible tasks 
+  hosts: poc_hosts 
+  become: true
+  
+  tasks:
+  - name: Creating directory 1 
+    ansible.builtin.file:
+      path: PoC1
+      state: directory 
+      owner: User1 
+      group: User1 
+      mode: 0775
+
+  - name: Creating directory 2 
+    ansible.builtin.file:
+      path: PoC2
+      state: directory 
+      owner: User1
+      group: User1
+      mode: 0775

@@ -1,0 +1,28 @@
+# How many times did you have to leave your VSCode to complete this?
+# 10
+# List all the sources you used to complete this task?
+# Ansible Stackoverflow
+# How long did it take to complete this task?
+# 30 min
+---
+- name: Web Server
+  hosts: poc_hosts 
+  become: true
+
+  tasks:
+  - name: select web Package 
+    ansible.builtin.package:
+      Package:
+        name: {{ webserver_package }} 
+        state: present
+
+  - name: Create Index Page 
+    template:
+      src: "index.html"
+      dest: "/var/www/html/index.html"
+
+  - name: Enable the Server 
+    service:
+      name: {{ webserver_package }} 
+      state: started 
+      enabled: true

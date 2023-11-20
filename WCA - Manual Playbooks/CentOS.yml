@@ -1,0 +1,3 @@
+---
+- name: installing httpd
+  yum: pkg=httpd state=present

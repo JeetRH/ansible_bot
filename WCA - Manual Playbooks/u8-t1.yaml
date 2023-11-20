@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Test reachablity to server ip
+    ansible.netcommon.net_ping:
+      dest: Server_IP

@@ -1,0 +1,50 @@
+---
+- name: Provision VM on Vcenter 
+  hosts: poc_hosts 
+  become: yes
+  gather_facts: no
+
+  vars:
+    vcenter_hostname: my_vcenter_hostname 
+    vcenter_username: my_vcenter_username
+    vcenter_password: my_vcenter_password 
+    datacenter_name: my_dc_name 
+    cluster_name: my_cluster_name 
+    vm_folder: my_vm_folder
+    vm_name: my_vm_name
+    vm_memory_mb: 4096 
+    vm_state: poweredon 
+    vm_tags:
+    - name: tag1 
+      value: poc
+    - name: tag2
+      value: ansible
+    snapshot_name: ansible_poc-snapshot
+
+  tasks :
+  - name: Provision a VM on Vcenter 
+    community.vmware.vmware_guest:
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      datacenter: "{{ vcenter_datacenter }}"
+      cluster: "{{ vcenter_cluster }}"
+      template: " {{ vcenter_template }}"
+      folder: "{{ datacenter_name }} /vm/" 
+      hardware:
+        memory_mb: 4096
+      power_state: "{{ poweredon }}"
+      validate_certs: no 
+    tags:
+      - tag_vm
+
+  - name: Take a snapshot
+    community.vmware.vmware_vm_snapshot:
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      cluster: "{{ vcenter_cluster }}"
+      datacenter: "{{ vcenter_datacenter }}"
+      name: "{{ my_vm_name }}"
+      state: present
+      validate_certs: no

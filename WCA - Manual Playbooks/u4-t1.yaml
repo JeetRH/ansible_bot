@@ -1,0 +1,15 @@
+# How many times did you have to leave your vscode to complete this?
+# 2
+# List all the sources you used to complete this task?
+# Ansiblepilot.com
+# How long did it take to complete this task?
+# 2 min
+---
+- name: ansible tasks 
+  hosts: poc_hosts 
+  become: true
+
+  tasks:
+  - name: Connectivity test 
+    ansible.builtin.ping:
+      ping:

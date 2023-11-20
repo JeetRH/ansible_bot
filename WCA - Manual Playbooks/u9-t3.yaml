@@ -1,0 +1,25 @@
+# How many times did you have to leave your vscode to complete this?-->6
+# List all the sources you used to complete this task?--https://ww.redhat.com/sysadmin/ansible-callback-plugins
+# How long did it take to complete this task?-->20minutes
+---
+- name: Creating webserver 
+  hosts: poc_hosts 
+  tasks:
+
+  - name: Install httpd package 
+    dnf:
+      name: httpd
+      state: latest
+
+  - name: Start and enable httpd service 
+    service:
+      name: httpd
+      enabled: true 
+      state: started
+
+  - name: Create a custom index.html file
+    сору:
+      dest: /var/www/html/index.html
+      content: |
+          o inventory hostname of this server 
+          o IP address displayed for any visitor

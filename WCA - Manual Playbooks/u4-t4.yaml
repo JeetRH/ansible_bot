@@ -1,0 +1,26 @@
+# How many times did you have to leave your vscode to complete this?
+# 15
+# List all the sources you used to complete this task?
+# Medium.com
+# How long did it take to complete this task
+# 35 min
+---
+- name: Web Server
+  hosts: poc_hosts
+  become: true
+
+  Tasks:
+  - name: ansible-poc-vm
+    vmware_guest:
+      validate_certs: False
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      datacenter: "{{ vcenter_datacenter }}"
+      cluster: "{{ vcenter_cluster }}"
+      template: " {{ vcenter_template }}"
+      folder: "{{ datacenter_name }} /vm/" 
+      memory_mb: {{ mem_mb }}
+      disk:
+      - size_go: {{ 10 }}
+      state: enabled

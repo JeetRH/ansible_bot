@@ -1,0 +1,23 @@
+---
+- name: m_3
+  hosts: poc_hosts 
+  tasks:
+  - name: Web Server
+    ansible.builtin.package:
+      name: {{ webserver_packages }} 
+      state: latest
+  - name: Create index file 
+    copy:
+      dest: /var/www/html/index.html
+      content:
+        inventory_hostname 
+        ansible_default_ipv4.address
+
+# Questions:
+# 1. I left vs Code about 20 times
+# 2. Sources:
+# 2.1 https://docs.ansible.com/ansible/latest/collections/ansible/bui]tin/package_module.html#examples
+# 2.2 https://www.redhat.com/sysadmin/ansible-callback-plugins
+# 2.3 https://stackoverflow.com/questions/48367788/ansible-get-hostname-as-defined-in-inventory|
+#2.4 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#magic-variables-and-how-to-access-information-about-other-hosts
+# 3. It took me about 40 minutes to complete the task

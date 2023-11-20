@@ -1,0 +1,13 @@
+---
+- hosts: all
+  tasks:
+  - name: Ansible create mutliple directory with permissions
+    file:
+      path: "{{ item.path }}"
+      mode: "{{ item.mode }}"
+      owner: "{{ item.owner }}"
+      group: "{{ item.group }}"
+      state: directory
+      with_items:
+        - { path: '/home/POC1', mode: '0775', owner: 'user1', group: 'user1'}
+        - { path: '/home/POC2', mode: '0775', owner: 'user1', group: 'user1'}
